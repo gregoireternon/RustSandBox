@@ -1,35 +1,31 @@
+
+mod IVehicule;
+use IVehicule::{Rectangle,Shape};
 use rand::Rng;
 use std::cmp::Ordering;
 use std::io;
 
+
 fn main() {
-    println!("Guess the number!");
+ let mut r = Rectangle{
+    height:10,
+    width:12,
+ };
 
-    let secret_number = rand::thread_rng().gen_range(1..=100);
 
-    loop {
-        println!("Please input your guess.");
+ let a = r.area();
+ println!("{a}");
 
-        let mut guess = String::new();
+//  let br:Box<dyn Shape> = Box::new(r);
+//  let a = br.area();
+//  println!("{a}");
 
-        io::stdin()
-            .read_line(&mut guess)
-            .expect("Failed to read line");
+ let brr:&mut  dyn   Shape = &mut r as &mut dyn Shape;
+  let a = brr.area();
+  println!("brr {a}");
 
-        let guess: u32 = match guess.trim().parse() {
-            Ok(num) => num,
-            Err(_) => continue,
-        };
+}
 
-        println!("You guessed: {guess}");
-
-        match guess.cmp(&secret_number) {
-            Ordering::Less => println!("Too small!"),
-            Ordering::Greater => println!("Too big!"),
-            Ordering::Equal => {
-                println!("You win!");
-                break;
-            }
-        }
-    }
+fn plus_one(x: i32) -> i32 {
+    return x + 1;
 }
